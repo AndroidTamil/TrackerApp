@@ -1,20 +1,29 @@
 package com.example.trackerapp.view
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.trackerapp.model.User
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.example.trackerapp.databinding.ActivityLoginBinding
+import com.example.trackerapp.model.User
+import com.example.trackerapp.viewModel.UserAdapter
 import io.realm.Realm
 import io.realm.kotlin.where
 
+
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+
+
 
         binding.loginButton.setOnClickListener {
 
@@ -47,7 +56,6 @@ class LoginActivity : AppCompatActivity() {
 
             }
 
-
         binding.userSignupButton.setOnClickListener {
 
             startActivity(
@@ -60,6 +68,21 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
+        binding.switchUserButton.setOnClickListener {
+
+                     replaceFragment(UserFragment())
+
+        }
+
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+
+        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+        transaction.replace(binding.fragmentContainer.id,fragment)
+        transaction.addToBackStack(null) // Add to back stack so user can navigate back
+
+        transaction.commit()
 
 
     }

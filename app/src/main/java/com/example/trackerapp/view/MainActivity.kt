@@ -9,11 +9,14 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.trackerapp.R
 import com.example.trackerapp.databinding.ActivityMainBinding
 import com.example.trackerapp.model.LocationData
 import com.example.trackerapp.service.LocationForegroundService
@@ -33,6 +36,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_lock) // Set custom icon for the button
+
+
+
         checkLocationPermission()
         realm = Realm.getDefaultInstance()
         val locationList = realm.where(LocationData::class.java).findAll()
@@ -49,13 +58,26 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
 
-
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                // Handle button click
+                // Example: Show a toast message
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         realm.close()
     }
-
 
     private var locationAccess=123
     @RequiresApi(Build.VERSION_CODES.P)

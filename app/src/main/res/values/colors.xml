@@ -13,5 +13,5 @@
     <color name="primary_light_dark">#673AB7</color>
     <color name="secondary_light">#009688</color>
     <color name="secondary_dark">#03DAC5</color>
-
+    <color name="secondary_back">@android:color/darker_gray</color>
 </resources>

@@ -1,6 +1,8 @@
 package com.example.trackerapp.view
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -88,7 +90,7 @@ class MapViewActivity : AppCompatActivity() {
     }
 
     private fun animateMovement(googleMap: GoogleMap, bikeImageView: ImageView) {
-        val handler = android.os.Handler()
+        val handler = Handler(Looper.getMainLooper())
         handler.postDelayed(object : Runnable {
             override fun run() {
                 if (currentIndex < locations.size - 1) {
